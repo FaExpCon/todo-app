@@ -1,6 +1,46 @@
+import { useEffect, useState } from 'react'
+import TaskForm from './components/TaskForm.jsx'
+import TaskList from './components/TaskList.jsx'
 import './styles.css'
 
+const STORAGE_KEY = 'my-tasks'
+
+function loadTasks() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    if (!Array.isArray(saved)) return []
+
+    return saved.filter(
+      (task) =>
+        task &&
+        typeof task.id === 'string' &&
+        typeof task.title === 'string' &&
+        typeof task.dueDate === 'string' &&
+        typeof task.completed === 'boolean',
+    )
+  } catch {
+    return []
+  }
+}
+
 function App() {
+  const [tasks, setTasks] = useState(loadTasks)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+    } catch {
+      // The app can still be used if browser storage is unavailable.
+    }
+  }, [tasks])
+
+  function addTask(title, dueDate) {
+    setTasks((current) => [
+      ...current,
+      { id: crypto.randomUUID(), title, dueDate, completed: false },
+    ])
+  }
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -11,7 +51,8 @@ function App() {
 
       <section className="task-panel" aria-labelledby="tasks-heading">
         <h2 id="tasks-heading">Your to-do list</h2>
-        <p className="empty-state">Your tasks will appear here.</p>
+        <TaskForm onAddTask={addTask} />
+        <TaskList tasks={tasks} />
       </section>
     </main>
   )

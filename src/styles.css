@@ -48,6 +48,108 @@ h1 {
   font-size: 1.2rem;
 }
 
+.task-form {
+  margin-bottom: 1.5rem;
+}
+
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.title-field {
+  flex: 2 1 220px;
+}
+
+.date-field {
+  flex: 1 1 180px;
+}
+
+.form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.form-field label span {
+  color: #64716c;
+  font-weight: 400;
+}
+
+.form-field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #cbd8ce;
+  border-radius: 10px;
+  color: inherit;
+  background: #fff;
+}
+
+.form-field input:focus-visible,
+.add-button:focus-visible {
+  outline: 2px solid #407669;
+  outline-offset: 2px;
+}
+
+.form-error {
+  margin-bottom: 0;
+  color: #a92f39;
+  font-size: 0.85rem;
+}
+
+.add-button {
+  min-height: 44px;
+  padding: 0.65rem 1.1rem;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: #326658;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-button:hover {
+  background: #244c41;
+}
+
+.task-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 1rem;
+  border: 1px solid #e2e9e3;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.task-title {
+  font-weight: 600;
+}
+
+.task-date {
+  color: #64716c;
+  font-size: 0.85rem;
+}
+
 .empty-state {
   margin-bottom: 0;
   padding: 2rem 1rem;
