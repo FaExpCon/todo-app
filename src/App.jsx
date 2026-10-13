@@ -41,6 +41,22 @@ function App() {
     ])
   }
 
+  function toggleTask(id) {
+    setTasks((current) => current.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task,
+    ))
+  }
+
+  function editTask(id, title, dueDate) {
+    setTasks((current) => current.map((task) =>
+      task.id === id ? { ...task, title, dueDate } : task,
+    ))
+  }
+
+  function deleteTask(id) {
+    setTasks((current) => current.filter((task) => task.id !== id))
+  }
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -52,7 +68,12 @@ function App() {
       <section className="task-panel" aria-labelledby="tasks-heading">
         <h2 id="tasks-heading">Your to-do list</h2>
         <TaskForm onAddTask={addTask} />
-        <TaskList tasks={tasks} />
+        <TaskList
+          tasks={tasks}
+          onToggleTask={toggleTask}
+          onEditTask={editTask}
+          onDeleteTask={deleteTask}
+        />
       </section>
     </main>
   )

@@ -95,7 +95,8 @@ h1 {
 }
 
 .form-field input:focus-visible,
-.add-button:focus-visible {
+.task-content input:focus-visible,
+button:focus-visible {
   outline: 2px solid #407669;
   outline-offset: 2px;
 }
@@ -132,7 +133,7 @@ h1 {
 .task-item {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 0.25rem 1rem;
   padding: 1rem;
@@ -141,13 +142,82 @@ h1 {
   overflow-wrap: anywhere;
 }
 
+.task-content {
+  display: flex;
+  flex: 1 1 200px;
+  align-items: start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.task-content input {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin: 0.15rem 0 0;
+  accent-color: #326658;
+  cursor: pointer;
+}
+
+.task-details {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
 .task-title {
   font-weight: 600;
+  cursor: pointer;
+}
+
+.task-item-completed .task-title {
+  color: #64716c;
+  text-decoration: line-through;
 }
 
 .task-date {
   color: #64716c;
   font-size: 0.85rem;
+}
+
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task-actions button {
+  min-height: 40px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd8ce;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.task-actions .add-button {
+  border-color: #326658;
+  background: #326658;
+}
+
+.task-actions .add-button:hover {
+  background: #244c41;
+}
+
+.secondary-button:hover {
+  background: #f5f7f4;
+}
+
+.delete-button {
+  color: #a92f39;
+}
+
+.delete-button:hover {
+  background: #fff0f0;
+}
+
+.edit-form {
+  width: 100%;
 }
 
 .empty-state {
