@@ -1,8 +1,11 @@
 import TaskItem from './TaskItem.jsx'
 
-function TaskList({ tasks, onToggleTask, onEditTask, onDeleteTask }) {
+function TaskList({ tasks, filter, hasTasks, onToggleTask, onEditTask, onDeleteTask }) {
   if (tasks.length === 0) {
-    return <p className="empty-state">Your tasks will appear here.</p>
+    let message = 'No tasks yet. Add one above to get started.'
+    if (hasTasks && filter === 'active') message = 'No active tasks.'
+    if (hasTasks && filter === 'completed') message = 'No completed tasks.'
+    return <p className="empty-state">{message}</p>
   }
 
   return (

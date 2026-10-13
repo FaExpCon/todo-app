@@ -1,10 +1,39 @@
 :root {
+  color-scheme: light;
+  --page: #f5f7f4;
+  --surface: #ffffff;
+  --text: #202b2a;
+  --muted: #586660;
+  --border: #b6c5ba;
+  --accent: #326658;
+  --accent-hover: #244c41;
+  --on-accent: #ffffff;
+  --hover: #edf2ee;
+  --error: #a92f39;
+  --error-hover: #fff0f0;
+  --focus: #27745e;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #202b2a;
-  background: #f5f7f4;
+  color: var(--text);
+  background: var(--page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #171b19;
+  --surface: #222825;
+  --text: #eef3ef;
+  --muted: #b3c0b8;
+  --border: #687c70;
+  --accent: #a2d8b9;
+  --accent-hover: #c1ead0;
+  --on-accent: #163527;
+  --hover: #303d35;
+  --error: #ffadb6;
+  --error-hover: #452b31;
+  --focus: #b8edd0;
 }
 
 * {
@@ -20,4 +49,13 @@ body {
 button,
 input {
   font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+input::placeholder {
+  color: var(--muted);
+  opacity: 1;
 }

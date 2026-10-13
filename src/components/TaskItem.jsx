@@ -1,10 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
   const [isEditing, setIsEditing] = useState(false)
   const [title, setTitle] = useState(task.title)
   const [dueDate, setDueDate] = useState(task.dueDate)
   const [error, setError] = useState('')
+  const editButtonRef = useRef(null)
+  const restoreFocus = useRef(false)
+
+  useEffect(() => {
+    if (!isEditing && restoreFocus.current) {
+      editButtonRef.current?.focus()
+      restoreFocus.current = false
+    }
+  }, [isEditing])
 
   function startEditing() {
     setTitle(task.title)
@@ -14,6 +23,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
   }
 
   function cancelEditing() {
+    restoreFocus.current = true
     setIsEditing(false)
     setError('')
   }
@@ -27,6 +37,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
     }
 
     onEditTask(task.id, trimmedTitle, dueDate)
+    restoreFocus.current = true
     setIsEditing(false)
     setError('')
   }
@@ -40,7 +51,16 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
   if (isEditing) {
     return (
       <li className="task-item">
-        <form className="edit-form" onSubmit={saveChanges}>
+        <form
+          className="edit-form"
+          onSubmit={saveChanges}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              event.preventDefault()
+              cancelEditing()
+            }
+          }}
+        >
           <div className="form-fields">
             <div className="form-field title-field">
               <label htmlFor={`edit-title-${task.id}`}>Task title</label>
@@ -92,7 +112,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
         </div>
       </div>
       <div className="task-actions">
-        <button className="secondary-button" type="button" onClick={startEditing} aria-label={`Edit ${task.title}`}>
+        <button ref={editButtonRef} className="secondary-button" type="button" onClick={startEditing} aria-label={`Edit ${task.title}`}>
           Edit
         </button>
         <button className="delete-button" type="button" onClick={confirmDelete} aria-label={`Delete ${task.title}`}>
