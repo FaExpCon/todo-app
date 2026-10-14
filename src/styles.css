@@ -57,6 +57,56 @@ h1 {
   line-height: 1.6;
 }
 
+.undo-toast {
+  position: fixed;
+  z-index: 10;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(calc(100% - 2rem), 420px);
+  min-height: 60px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
+  transform: translateX(-50%);
+}
+
+.undo-toast[aria-hidden='true'] {
+  display: none;
+}
+
+.undo-toast button {
+  flex: none;
+  min-height: 44px;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.undo-toast button:hover {
+  background: var(--hover);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .task-panel {
   padding: clamp(1.25rem, 5vw, 2rem);
   border: 1px solid var(--border);
@@ -205,6 +255,16 @@ button:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.task-item-overdue {
+  border-color: var(--overdue-border);
+  background: var(--overdue-bg);
+}
+
+.task-item-overdue .task-date {
+  color: var(--error);
+  font-weight: 700;
+}
+
 .task-content {
   display: flex;
   flex: 1 1 200px;
@@ -302,6 +362,10 @@ button:focus-visible {
 
   .task-item {
     background: var(--surface);
+  }
+
+  .task-item-overdue {
+    background: var(--overdue-bg);
   }
 
   .task-content {

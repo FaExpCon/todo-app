@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
+import { formatDueDate } from '../dueDates.js'
 
-function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
+function TaskItem({ task, today, onToggleTask, onEditTask, onDeleteTask }) {
   const [isEditing, setIsEditing] = useState(false)
   const [title, setTitle] = useState(task.title)
   const [dueDate, setDueDate] = useState(task.dueDate)
   const [error, setError] = useState('')
   const editButtonRef = useRef(null)
   const restoreFocus = useRef(false)
+  const due = task.dueDate ? formatDueDate(task.dueDate, today, task.completed) : null
 
   useEffect(() => {
     if (!isEditing && restoreFocus.current) {
@@ -32,7 +34,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
     event.preventDefault()
     const trimmedTitle = title.trim()
     if (!trimmedTitle) {
-      setError('Enter a task title.')
+      setError('할 일을 입력해 주세요.')
       return
     }
 
@@ -40,12 +42,6 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
     restoreFocus.current = true
     setIsEditing(false)
     setError('')
-  }
-
-  function confirmDelete() {
-    if (window.confirm(`Delete “${task.title}”? This cannot be undone.`)) {
-      onDeleteTask(task.id)
-    }
   }
 
   if (isEditing) {
@@ -63,7 +59,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
         >
           <div className="form-fields">
             <div className="form-field title-field">
-              <label htmlFor={`edit-title-${task.id}`}>Task title</label>
+              <label htmlFor={`edit-title-${task.id}`}>할 일</label>
               <input
                 id={`edit-title-${task.id}`}
                 type="text"
@@ -79,7 +75,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
               {error && <p className="form-error" id={`edit-error-${task.id}`}>{error}</p>}
             </div>
             <div className="form-field date-field">
-              <label htmlFor={`edit-date-${task.id}`}>Due date <span>(optional)</span></label>
+              <label htmlFor={`edit-date-${task.id}`}>마감일 <span>(선택)</span></label>
               <input
                 id={`edit-date-${task.id}`}
                 type="date"
@@ -89,8 +85,8 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
             </div>
           </div>
           <div className="task-actions">
-            <button className="add-button" type="submit">Save</button>
-            <button className="secondary-button" type="button" onClick={cancelEditing}>Cancel</button>
+            <button className="add-button" type="submit">저장</button>
+            <button className="secondary-button" type="button" onClick={cancelEditing}>취소</button>
           </div>
         </form>
       </li>
@@ -98,7 +94,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
   }
 
   return (
-    <li className={`task-item${task.completed ? ' task-item-completed' : ''}`}>
+    <li className={`task-item${task.completed ? ' task-item-completed' : ''}${due?.overdue ? ' task-item-overdue' : ''}`}>
       <div className="task-content">
         <input
           id={`complete-${task.id}`}
@@ -108,15 +104,15 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
         />
         <div className="task-details">
           <label className="task-title" htmlFor={`complete-${task.id}`}>{task.title}</label>
-          {task.dueDate && <span className="task-date">Due {task.dueDate}</span>}
+          {due && <span className="task-date" title={`마감일: ${task.dueDate}`}>{due.label}</span>}
         </div>
       </div>
       <div className="task-actions">
-        <button ref={editButtonRef} className="secondary-button" type="button" onClick={startEditing} aria-label={`Edit ${task.title}`}>
-          Edit
+        <button ref={editButtonRef} className="secondary-button" type="button" onClick={startEditing} aria-label={`${task.title} 수정`}>
+          수정
         </button>
-        <button className="delete-button" type="button" onClick={confirmDelete} aria-label={`Delete ${task.title}`}>
-          Delete
+        <button className="delete-button" type="button" onClick={() => onDeleteTask(task.id)} aria-label={`${task.title} 삭제`}>
+          삭제
         </button>
       </div>
     </li>

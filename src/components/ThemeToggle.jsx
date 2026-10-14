@@ -4,9 +4,9 @@ function ThemeToggle({ theme, onToggle }) {
       className="theme-toggle"
       type="button"
       onClick={onToggle}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      aria-label={`${theme === 'light' ? '다크' : '라이트'} 모드로 전환`}
     >
-      {theme === 'light' ? 'Dark mode' : 'Light mode'}
+      {theme === 'light' ? '다크 모드' : '라이트 모드'}
     </button>
   )
 }

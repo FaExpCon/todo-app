@@ -10,7 +10,7 @@ function TaskForm({ onAddTask }) {
     const trimmedTitle = title.trim()
 
     if (!trimmedTitle) {
-      setError('Enter a task title.')
+      setError('할 일을 입력해 주세요.')
       return
     }
 
@@ -24,7 +24,7 @@ function TaskForm({ onAddTask }) {
     <form className="task-form" onSubmit={handleSubmit}>
       <div className="form-fields">
         <div className="form-field title-field">
-          <label htmlFor="task-title">Task title</label>
+          <label htmlFor="task-title">할 일</label>
           <input
             id="task-title"
             type="text"
@@ -35,12 +35,12 @@ function TaskForm({ onAddTask }) {
             }}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? 'task-title-error' : undefined}
-            placeholder="What needs doing?"
+            placeholder="무엇을 해야 하나요?"
           />
           {error && <p className="form-error" id="task-title-error">{error}</p>}
         </div>
         <div className="form-field date-field">
-          <label htmlFor="task-due-date">Due date <span>(optional)</span></label>
+          <label htmlFor="task-due-date">마감일 <span>(선택)</span></label>
           <input
             id="task-due-date"
             type="date"
@@ -49,7 +49,7 @@ function TaskForm({ onAddTask }) {
           />
         </div>
       </div>
-      <button className="add-button" type="submit">Add task</button>
+      <button className="add-button" type="submit">추가</button>
     </form>
   )
 }

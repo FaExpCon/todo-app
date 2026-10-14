@@ -11,6 +11,8 @@
   --hover: #edf2ee;
   --error: #a92f39;
   --error-hover: #fff0f0;
+  --overdue-bg: #fff1f1;
+  --overdue-border: #bd555f;
   --focus: #27745e;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text);
@@ -33,6 +35,8 @@
   --hover: #303d35;
   --error: #ffadb6;
   --error-hover: #452b31;
+  --overdue-bg: #38272a;
+  --overdue-border: #ef9ba4;
   --focus: #b8edd0;
 }
 

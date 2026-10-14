@@ -1,10 +1,10 @@
 import TaskItem from './TaskItem.jsx'
 
-function TaskList({ tasks, filter, hasTasks, onToggleTask, onEditTask, onDeleteTask }) {
+function TaskList({ tasks, filter, hasTasks, today, onToggleTask, onEditTask, onDeleteTask }) {
   if (tasks.length === 0) {
-    let message = 'No tasks yet. Add one above to get started.'
-    if (hasTasks && filter === 'active') message = 'No active tasks.'
-    if (hasTasks && filter === 'completed') message = 'No completed tasks.'
+    let message = '아직 할 일이 없어요. 하나 추가해 보세요!'
+    if (hasTasks && filter === 'active') message = '진행 중인 할 일이 없어요.'
+    if (hasTasks && filter === 'completed') message = '완료한 할 일이 없어요.'
     return <p className="empty-state">{message}</p>
   }
 
@@ -14,6 +14,7 @@ function TaskList({ tasks, filter, hasTasks, onToggleTask, onEditTask, onDeleteT
         <TaskItem
           key={task.id}
           task={task}
+          today={today}
           onToggleTask={onToggleTask}
           onEditTask={onEditTask}
           onDeleteTask={onDeleteTask}
